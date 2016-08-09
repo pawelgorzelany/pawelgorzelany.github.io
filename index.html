@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400&subset=latin,latin-ext" rel="stylesheet">
+    <link href="https://file.myfontastic.com/n6vo44Re5QaWo8oCKShBs7/icons.css" rel="stylesheet">
+    <title>pawelgorzelany.pl</title>
+    <style>
+     body, html {
+         padding: 0;
+         margin: 0;
+         font-family: 'Lato', sans-serif;
+         font-size: 16px;
+         font-weight: 300;
+         font-style: light;
+     }
+
+     header {
+         position: fixed;
+         left: 0px;
+         right: 0px;
+         background: rgba(51, 51, 51, 0.8);
+         padding: 0 2rem;
+         display: flex;
+         justify-content: space-between;
+         transform: translateY(0%);
+         transition: background 400ms ease-out, transform 200ms ease-in-out 150ms;
+         color: #fff;
+     }
+
+     header.unpinned{
+         transform: translateY(-100%);
+     }
+
+     header.at-top {
+         background: transparent;
+         color: #333;
+     }
+
+     nav {
+         display: flex;
+         align-items: center;
+         transform: translateX(0%);
+         transition: transform 500ms cubic-bezier(0.9, 0.01, 0.165, 0.99);
+     }
+
+     section {
+         display: flex;
+         flex-direction: column;
+         justify-content: flex-end;
+         align-items: flex-start;
+         color: #fff;
+         padding: 0 2rem;
+     }
+
+     .landing {
+         height: 100vh;
+         background: #fff;
+         display: flex;
+         justify-content: center;
+         align-items: flex-start;
+     }
+
+     footer {
+         display: flex;
+         flex-direction: column;
+         justify-content: flex-end;
+         background: #f1433f;
+         color: #fff;
+         padding: 2rem;
+         padding-top: 3rem;
+     }
+
+     footer a {
+         margin-top: 0.5rem;
+         margin-bottom: 0.1rem;
+     }
+
+     a {
+         display: inline-block;
+         text-decoration: none;
+         color: inherit;
+     }
+
+     a.logo {
+         font-size: 1.5em;
+         font-weight: 400;
+         padding: 1rem 0;
+     }
+
+     nav a {
+         margin-left: 2rem;
+         font-weight: 400;
+     }
+
+     h1 {
+         margin: 0;
+         font-size: 2.6em;
+         font-weight: 300;
+         font-style: light;
+     }
+
+     .mobile-toggle {
+         display: none;
+     }
+
+     @media (max-width: 775px) {
+         .no-scroll {
+             overflow: hidden;
+         }
+
+         section {
+             padding: 0 1rem;
+         }
+
+         a.logo {
+             z-index: 600;
+         }
+
+         .mobile-toggle {
+             z-index: 600;
+             display: flex;
+             flex-direction: column;
+             justify-content: center;
+             align-items: center;
+         }
+
+         .bar {
+             position: relative;
+             margin: 8px 0px;
+         }
+
+         .bar:before {
+             top: -8px;
+         }
+
+         .bar:after {
+             top: 8px;
+         }
+
+         .bar:before, .bar:after {
+             position: absolute;
+             content: "";
+             transition: transform 300ms ease-in-out;
+         }
+
+         .bar, .bar:before, .bar:after {
+             display: block;
+             width: 25px;
+             height: 3px;
+             background: #fff;
+         }
+
+         .at-top .bar, .at-top .bar:before, .at-top .bar:after {
+             background: #333;
+         }
+
+         header.open .mobile-toggle .bar {
+             background: transparent;
+         }
+
+         header.open .mobile-toggle .bar:before {
+             background: #fff;
+             transform: translateY(8px) rotate(45deg);
+         }
+
+         header.open .mobile-toggle .bar:after {
+             background: #fff;
+             transform: translateY(-8px) rotate(-45deg);
+         }
+
+
+         header {
+             padding: 0 1rem;
+             flex-wrap: wrap;
+         }
+
+         header.open a.logo {
+             transition: color 200ms ease-in-out 250ms;
+             color: #fff;
+         }
+
+         nav {
+             position: absolute;
+             left: 100vw;
+             height: 100vh;
+             width: 100vw;
+             flex-direction: column;
+             justify-content: center;
+             transform: translateX(0%);
+             background: #f1433f;
+             z-index: 500;
+             color: #fff
+         }
+         header.open nav {
+             transform: translateX(-100%);
+         }
+
+         nav a {
+             margin: 0;
+             margin-top: 1rem;
+             margin-bottom: 0.5rem;
+         }
+
+         footer {
+             padding: 1rem;
+             padding-top: 1.5rem;
+         }
+     }
+    </style>
+  </head>
+  <body>
+    <header class="at-top">
+      <a href="#home" class="logo">PG</a>
+      <a href="#" class="mobile-toggle">
+        <span class="bar"></span>
+      </a>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+    <section class="landing">
+      <h1>Hi, I'm Paweł, I do fun things with computers. Nice to meet You!</h1>
+    </section>
+    <section id="about" class="about">
+    </section>
+    <footer id="contact">
+        <a href="https://twitter.com/pawelgorzelany">twitter</a>
+        <a href="https://github.com/pawelgorzelany">github</a>
+        <a href="https://bitbucket.org/pawelgorzelany">bitbucket</a>
+    </footer>
+    <script>
+     (function () {
+         'use strict';
+
+         var lastScrollY = 0,
+             lastDirection = 'down',
+             scrolling = false,
+             throttledColorize = throttle(5, colorRotate);
+
+         function throttle (calls, f) {
+             var original_calls = calls;
+             return function () {
+                 if (calls == 0) {
+                     calls = original_calls;
+                     return f.apply(undefined, arguments);
+                 } else {
+                     calls = calls - 1;
+                 }
+             };
+         }
+
+         function randomInt(min, max) {
+             min = Math.ceil(min);
+             max = Math.floor(max);
+             return Math.floor(Math.random() * (max - min)) + min;
+         }
+
+         function toggleNav (e) {
+             document.querySelector('body').classList.toggle('no-scroll');
+             document.querySelector('header').classList.toggle('open');
+         }
+
+         function update (timestamp) {
+             var currentScrollY = window.scrollY,
+                 scroll = currentScrollY - lastScrollY,
+                 direction =  scroll > 0 ? 'down' : 'up',
+                 speed = Math.abs(scroll),
+                 header = document.querySelector('header');
+
+             if (currentScrollY > 10) {
+                 header.classList.remove('at-top');
+             } else {
+                 header.classList.add('at-top');
+                 header.classList.remove('unpinned');
+             }
+
+             if (direction == 'down' && speed > 7) {
+                 header.classList.add('unpinned');
+             }
+
+             if (direction == 'up' && speed > 3) {
+                 header.classList.remove('unpinned');
+             }
+
+             throttledColorize('.landing h1 span', direction);
+
+             scrolling = false;
+             lastScrollY = currentScrollY;
+             lastDirection = direction;
+         }
+
+         function requestScrollAnimation () {
+             if (!scrolling) {
+                 window.requestAnimationFrame(update);
+             }
+             scrolling = true;
+         }
+
+         function colorRotate (selector, direction) {
+             var letters = document.querySelectorAll(selector),
+                 colors = Array.prototype.map.call(letters, function (letter) { return letter.style.color; });
+             if (direction == 'down') {
+                 colors.unshift(colors.pop());
+             } else if (direction == 'up') {
+                 colors.push(colors.shift());
+             }
+             Array.prototype.forEach.call(letters, function (letter, i) { letter.style.color = colors[i]; });
+         }
+
+         function createSlogan (selector) {
+             var container = document.querySelector(selector),
+                 letters = container.textContent.match(/./g),
+                 letterSpan = undefined,
+                 slogan = document.createDocumentFragment(),
+                 colors = ['#333333', '#f5a503', '#f2385a', '#4ad9d9', '#36b1bf'];
+
+             letters.forEach(function (letter) {
+                 letterSpan = document.createElement('span');
+                 letterSpan.style.color = colors[randomInt(0, colors.length)];
+                 letterSpan.textContent = letter;
+                 slogan.appendChild(letterSpan);
+             });
+
+             container.textContent = '';
+             container.appendChild(slogan);
+         }
+
+         function handleMobileNavClick (e) {
+             if (e.target.nodeName == 'A' && document.querySelector('body').classList.contains('no-scroll')) {
+                 toggleNav(e);
+             }
+         }
+
+         createSlogan('.landing h1');
+         document.querySelector('.mobile-toggle').addEventListener('click', toggleNav, false);
+         document.querySelector('nav').addEventListener('click', handleMobileNavClick, false);
+         window.addEventListener('scroll', requestScrollAnimation, false);
+     }(window));
+    </script>
+  </body>
+</html>
