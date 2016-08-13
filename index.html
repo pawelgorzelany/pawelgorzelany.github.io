@@ -259,7 +259,8 @@
              return Math.floor(Math.random() * (max - min)) + min;
          }
 
-         function toggleNav (e) {
+         function toggleNav (e, menuClick) {
+             menuClick || e.preventDefault();
              document.querySelector('body').classList.toggle('no-scroll');
              document.querySelector('header').classList.toggle('open');
          }
@@ -331,7 +332,7 @@
 
          function handleMobileNavClick (e) {
              if (e.target.nodeName == 'A' && document.querySelector('body').classList.contains('no-scroll')) {
-                 toggleNav(e);
+                 toggleNav(e, true);
              }
          }
 
